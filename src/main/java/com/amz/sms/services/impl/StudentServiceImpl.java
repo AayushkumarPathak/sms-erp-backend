@@ -38,14 +38,25 @@ public class StudentServiceImpl implements StudentService {
         List<Student> students = this.studentRepo.findByStandard(standard);
         return students;
 
-        
-        
     }
 
     @Override
     public Student findByAdmissionNo(String admNo) {
         Student student = this.studentRepo.findByAdmissionNo(admNo);
-        return student;        
+        return student;
+    }
+
+    @Override
+    public Student updateStudent(String admissionNo, Student studentDto) {
+        Student student = this.studentRepo.findById(admissionNo)
+                .orElseThrow(() -> new RuntimeException());
+        
+        student.setName(studentDto.getName());
+        student.setSection(studentDto.getSection());
+        student.setStandard(studentDto.getStandard());
+
+        return student;
+
     }
 
 }

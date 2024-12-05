@@ -12,5 +12,6 @@ public interface StudentService {
     Optional<Student> getStudentById(String id);
     List<Student> findByStandard(String standard);
     Student findByAdmissionNo(String admNo);
+    Student updateStudent(String admissionNo,Student student);
 
 }

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -45,15 +46,26 @@ public class StudentController {
     }
 
     @GetMapping("/search/standard/{standard}")
-    public ResponseEntity<List<Student>> findStudentsByStandard(@PathVariable String standard){
+    public ResponseEntity<List<Student>> findStudentsByStandard(@PathVariable String standard) {
         List<Student> students = this.studentService.findByStandard(standard);
-        return new ResponseEntity<>(students,HttpStatus.OK);
+        return new ResponseEntity<>(students, HttpStatus.OK);
     }
 
     @GetMapping("/search/admissionNo/{admNo}")
-    public ResponseEntity<Student> findByAdmissionNo(@PathVariable String admNo){
+    public ResponseEntity<Student> findByAdmissionNo(@PathVariable String admNo) {
         Student student = this.studentService.findByAdmissionNo(admNo);
-        return new ResponseEntity<>(student,HttpStatus.OK);
+        return new ResponseEntity<>(student, HttpStatus.OK);
+    }
+
+    @PutMapping("/update/{admNo}")
+    public ResponseEntity<Student> updateStudent(@PathVariable String admNo, @RequestBody Student student) {
+        try {
+            Student updatedStudent = this.studentService.updateStudent(admNo, student);
+            return new ResponseEntity<>(updatedStudent, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new Student(), HttpStatus.BAD_REQUEST);
+        }
+
     }
 
 }
